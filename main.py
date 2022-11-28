@@ -11,8 +11,9 @@ import random
 import matplotlib
 import pandas as pd
 from agent import *
-from model import *
 
+with open('posicion.json', 'r') as archivo:
+  posicionInicial = json.load(archivo)
 
 conteoSteps = 0
 conteoAgente = -1
@@ -64,8 +65,7 @@ def boidsInit():
     global flock
     if request.method == 'GET':
         # Set the number of agents here:
-        a = CarModel(10,50,50)
-        flock = [Boid(*vec[id], width, height, id) for id in range(10)]
+        flock = [Boid(*posicionInicial[id], width, height, id) for id in range(10)]
 
         return jsonify({"num_agents":10, "w": 50, "h": 50})
     elif request.method == 'POST':

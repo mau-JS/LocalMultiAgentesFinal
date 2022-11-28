@@ -10,13 +10,20 @@ posicionAgent = []
 posicionStep = []
 def compute_gini(model):
     return 5
+
+for i in range (10):
+    a = random.sample(range(0,50),2)
+    vec.append(a)
+posicionJSON = json.dumps(vec)
+
+with open("posicion.json", "w") as outfile:
+    outfile.write(posicionJSON)
+
 class CarModel(mesa.Model):
     def __init__(self,N,width,height):
         global vec
         self.numAgentsCar = N
         conteo = 0
-        for i in range (self.numAgentsCar):
-            vec.append(random.sample(range(0, 50), 2))
 
         self.grid = mesa.space.MultiGrid(width,height,True)
         self.schedule = mesa.time.BaseScheduler(self)
@@ -65,6 +72,8 @@ class CarModel(mesa.Model):
             self.schedule.add(a)
             x,y = vec[i]
             self.grid.place_agent(a,(x,y))
+
+
 
         self.datacollector = mesa.DataCollector(
             model_reporters={"Gini": compute_gini}
