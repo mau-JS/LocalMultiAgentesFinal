@@ -88,10 +88,12 @@ class SemaforoAgent1(mesa.Agent):
         super().__init__(unique_id, model)
         self.nombre = unique_id
         self.color = "green"
-        self.tiempo = 10
+        self.tiempo = 13
     def change(self):
         self.tiempo -= 1
-        if(self.tiempo == 0 and self.color == "green"):
+        if (self.tiempo == 3 and self.color == "green"):
+            self.color = "yellow"
+        elif(self.tiempo == 0 and self.color == "yellow"):
             self.color = "red"
             self.tiempo = 10
         elif(self.tiempo == 0 and self.color == "red"):
@@ -105,10 +107,12 @@ class SemaforoAgent2(mesa.Agent):
         super().__init__(unique_id, model)
         self.nombre = unique_id
         self.color = "green"
-        self.tiempo = 10
+        self.tiempo = 13
     def change(self):
         self.tiempo -= 1
-        if(self.tiempo == 0 and self.color == "green"):
+        if (self.tiempo == 3 and self.color == "green"):
+            self.color = "yellow"
+        elif(self.tiempo == 0 and self.color == "yellow"):
             self.color = "red"
             self.tiempo = 10
         elif(self.tiempo == 0 and self.color == "red"):
@@ -122,13 +126,15 @@ class SemaforoAgent3(mesa.Agent):
         super().__init__(unique_id, model)
         self.nombre = unique_id
         self.color = "red"
-        self.tiempo = 10
+        self.tiempo = 13
     def change(self):
         self.tiempo -= 1
-        if(self.tiempo == 0 and self.color == "red"):
+        if (self.tiempo == 3 and self.color == "green"):
+            self.color = "yellow"
+        elif(self.tiempo == 0 and self.color == "red"):
             self.color = "green"
             self.tiempo = 10
-        elif(self.tiempo == 0 and self.color == "green"):
+        elif(self.tiempo == 0 and self.color == "yellow"):
             self.color = "red"
             self.tiempo = 10
     def step(self):
@@ -139,13 +145,15 @@ class SemaforoAgent4(mesa.Agent):
         super().__init__(unique_id, model)
         self.nombre = unique_id
         self.color = "red"
-        self.tiempo = 10
+        self.tiempo = 13
     def change(self):
         self.tiempo -= 1
-        if(self.tiempo == 0 and self.color == "red"):
+        if (self.tiempo == 3 and self.color == "green"):
+            self.color = "yellow"
+        elif(self.tiempo == 0 and self.color == "red"):
             self.color = "green"
             self.tiempo = 10
-        elif(self.tiempo == 0 and self.color == "green"):
+        elif(self.tiempo == 0 and self.color == "yellow"):
             self.color = "red"
             self.tiempo = 10
     def step(self):
