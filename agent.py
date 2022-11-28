@@ -65,7 +65,7 @@ class CarAgent3(mesa.Agent):
         self.move()
 
 #Se dirige abajo
-class CarAgent3(mesa.Agent):
+class CarAgent4(mesa.Agent):
     global vectorPosiciones
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
@@ -73,7 +73,7 @@ class CarAgent3(mesa.Agent):
         self.color = "purple"
     def move(self):
         x,y = self.pos
-        self.newPos = (x, y + 1)
+        self.newPos = (x, y-1)
         self.model.grid.move_agent(self,self.newPos)
         self.velocidadAgente = {
             "x": str(self.newPos[0] - x),
@@ -82,3 +82,19 @@ class CarAgent3(mesa.Agent):
 
     def step(self):
         self.move()
+
+class SemaforoAgent1(mesa.Agent):
+    def __init__(self, unique_id, model):
+        super().__init__(unique_id, model)
+        self.nombre = unique_id
+        self.color = "blue"
+    def step(self):
+        pass
+
+class SemaforoAgent2(mesa.Agent):
+    def __init__(self, unique_id, model):
+        super().__init__(unique_id, model)
+        self.nombre = unique_id
+        self.color = "blue"
+    def step(self):
+        pass

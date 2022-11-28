@@ -6,17 +6,16 @@ with open('sample.json', 'r') as f:
   data = json.load(f)
 
 
-conteo = 0
-numeroAgente = 0
+
 #Corro el server, y en agente
 #velocidadR = [[3,4],[5,6]]
 #contador = len(velocidadR)
 
+
+
 class Boid():
 
     def __init__(self, x, y, width, height, id):
-        global conteo
-        global numeroAgente
         self.id = id
         self.position = Vector(x, y)
         vect = np.array([0,0])
@@ -30,28 +29,15 @@ class Boid():
         self.width = width
         self.height = height
 
-    def update(self):
-        global speedGlobal
-        global conteo
-        vectorVelocidad = Vector(data[numeroAgente][conteo]['x'],data[numeroAgente][conteo]['y'])
-        self.position += Vector(*vectorVelocidad)
-        self.velocity += self.acceleration
-        if np.linalg.norm(self.velocity) > self.max_speed:
-            self.velocity = self.velocity / np.linalg.norm(self.velocity) * self.max_speed
-
-        self.acceleration = Vector(*np.zeros(2))
-        """contador-=1
-        if(contador>0):
-            self.position += Vector(*velocidadR[conteo])
+    def update(self,numeroStep,conteoAgente):
+        if conteoAgente <= 9:
+            vectorVelocidad = Vector(data[numeroStep][conteoAgente]['x'],data[numeroStep][conteoAgente]['y'])
+            self.position += Vector(*vectorVelocidad)
             self.velocity += self.acceleration
-            conteo += 1
-        #limit
-        if np.linalg.norm(self.velocity) > self.max_speed:
-            self.velocity = self.velocity / np.linalg.norm(self.velocity) * self.max_speed
-
-        self.acceleration = Vector(*np.zeros(2))
-        # print(self.position)  # To show the position at the console"""
-
+            if np.linalg.norm(self.velocity) > self.max_speed:
+                self.velocity = self.velocity / np.linalg.norm(self.velocity) * self.max_speed
+            self.acceleration = Vector(*np.zeros(2))
+            conteoAgente = conteoAgente + 1
 
     def apply_behaviour(self, boids):
         alignment = self.align(boids)

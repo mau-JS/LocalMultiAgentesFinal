@@ -13,16 +13,21 @@ import pandas as pd
 from agent import *
 from model import *
 
-numeroAgente = 0
+
+conteoSteps = 0
+conteoAgente = -1
 def updatePositions(flock):
-    global numeroAgente
-    numeroAgente += 1
+    global conteoSteps
+    global conteoAgente
+    conteoSteps = conteoSteps + 1
     positions = []
     for boid in flock:
+        conteoAgente = conteoAgente + 1
         boid.apply_behaviour(flock)
-        boid.update()
+        boid.update(conteoSteps,conteoAgente)
         boid.edges()
         positions.append((boid.id, boid.position))
+    conteoAgente = -1
     return positions
 
 def positionsToJSON(positions):
