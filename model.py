@@ -8,13 +8,45 @@ from agent import *
 vec = []
 posicionAgent = []
 posicionStep = []
+choices = (CarAgent1,CarAgent2,CarAgent3,CarAgent4)
+selecciones = []
 def compute_gini(model):
     return 5
 
 for i in range (10):
-    a = random.sample(range(0,50),2)
-    vec.append(a)
+    #CarAgentType1
+    eleccion = random.choice(choices)
+
+    if eleccion == CarAgent1:
+        m = random.randrange(0,10)
+        n = random.randrange(25,30)
+        a = [m,n]
+        vec.append(a)
+        selecciones.append(eleccion)
+
+    if eleccion == CarAgent2:
+        m = random.randrange(40,50)
+        n = random.randrange(20,25)
+        a = [m,n]
+        vec.append(a)
+        selecciones.append(eleccion)
+
+    if eleccion == CarAgent3:
+        m = random.randrange(20,25)
+        n = random.randrange(0,10)
+        a = [m,n]
+        vec.append(a)
+        selecciones.append(eleccion)
+
+    if eleccion == CarAgent4:
+        m = random.randrange(25,30)
+        n = random.randrange(40,50)
+        a = [m,n]
+        vec.append(a)
+        selecciones.append(eleccion)
+
 posicionJSON = json.dumps(vec)
+
 
 with open("posicion.json", "w") as outfile:
     outfile.write(posicionJSON)
@@ -68,7 +100,8 @@ class CarModel(mesa.Model):
                 conteo += 1
 
         for i in range(self.numAgentsCar):
-            a = random.choice(self.clases)("C" + str(i),self)
+            #a = random.choice(self.clases)("C" + str(i),self)
+            a = selecciones[i]("C" + str(i),self)
             self.schedule.add(a)
             x,y = vec[i]
             self.grid.place_agent(a,(x,y))

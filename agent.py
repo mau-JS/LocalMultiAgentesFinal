@@ -6,13 +6,34 @@ import pandas as pd
 import json
 
 
-#Coche se dirige derecha
+#Coche carril superior a la derecha
 class CarAgent1(mesa.Agent):
     global vectorPosiciones
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
         self.nombre = unique_id
-        self.color = "red"
+        self.color = "purple"
+        self.moverStatus = None
+    
+
+    def verificaSemaforo(self):
+        self.moverStatus = None
+        celdasAlrededor = self.model.grid.get_neighborhood(self.pos, moore = True, include_center = False, radius = 2)
+
+        for i in celdasAlrededor:
+            contenidoCelda = self.model.grid.get_cell_list_contents(i)
+            if(isinstance(contenidoCelda,SemaforoAgent1)):
+                if(contenidoCelda.color == "red"):
+                    moverStatus = False
+                    break
+                elif(contenidoCelda.color == "yellow" or contenidoCelda.color == "green"):
+                    moverStatus = True
+                    break
+            else:
+                moverStatus = True
+        if moverStatus == True:
+                self.move()
+#Coche carril inferior a la izquierda
     def move(self):
         x,y = self.pos
         self.newPos = (x + 1 , y)
@@ -51,7 +72,7 @@ class CarAgent3(mesa.Agent):
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
         self.nombre = unique_id
-        self.color = "green"
+        self.color = "blue"
     def move(self):
         x,y = self.pos
         self.newPos = (x, y + 1)
@@ -64,13 +85,13 @@ class CarAgent3(mesa.Agent):
     def step(self):
         self.move()
 
-#Se dirige abajo
+#Se dirige abajo carril derecho
 class CarAgent4(mesa.Agent):
     global vectorPosiciones
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
         self.nombre = unique_id
-        self.color = "purple"
+        self.color = "black"
     def move(self):
         x,y = self.pos
         self.newPos = (x, y-1)
