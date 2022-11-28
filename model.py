@@ -20,8 +20,10 @@ class CarModel(mesa.Model):
         self.grid = mesa.space.MultiGrid(width,height,True)
         self.schedule = mesa.time.BaseScheduler(self)
         self.running = True
+        self.clases = (CarAgent1,CarAgent2,CarAgent3)
+        
         for i in range(self.numAgentsCar):
-            a = CarAgent1(i,self)
+            a = random.choice(self.clases)(i,self)
             self.schedule.add(a)
             x,y = vec[i]
             self.grid.place_agent(a,(x,y))
