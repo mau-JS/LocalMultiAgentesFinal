@@ -59,19 +59,13 @@ class CarModel(mesa.Model):
                 y = j
                 self.grid.place_agent(c,(x,y))
                 conteo += 1
-                
-        for i in range(self.numAgentsCar):
-            a = random.choice(self.clases)(i,self)
-            self.schedule.add(a)
-            x,y = vec[i]
-            self.grid.place_agent(a,(x,y))
-
 
         for i in range(self.numAgentsCar):
             a = random.choice(self.clases)("C" + str(i),self)
             self.schedule.add(a)
             x,y = vec[i]
             self.grid.place_agent(a,(x,y))
+
         self.datacollector = mesa.DataCollector(
             model_reporters={"Gini": compute_gini}
         )
