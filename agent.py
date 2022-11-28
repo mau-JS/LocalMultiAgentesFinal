@@ -87,14 +87,74 @@ class SemaforoAgent1(mesa.Agent):
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
         self.nombre = unique_id
-        self.color = "blue"
+        self.color = "green"
+        self.tiempo = 10
+    def change(self):
+        self.tiempo -= 1
+        if(self.tiempo == 0 and self.color == "green"):
+            self.color = "red"
+            self.tiempo = 10
+        elif(self.tiempo == 0 and self.color == "red"):
+            self.color = "green"
+            self.tiempo = 10
     def step(self):
-        pass
+        self.change()
 
 class SemaforoAgent2(mesa.Agent):
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
         self.nombre = unique_id
-        self.color = "blue"
+        self.color = "green"
+        self.tiempo = 10
+    def change(self):
+        self.tiempo -= 1
+        if(self.tiempo == 0 and self.color == "green"):
+            self.color = "red"
+            self.tiempo = 10
+        elif(self.tiempo == 0 and self.color == "red"):
+            self.color = "green"
+            self.tiempo = 10
+    def step(self):
+        self.change()
+
+class SemaforoAgent3(mesa.Agent):
+    def __init__(self, unique_id, model):
+        super().__init__(unique_id, model)
+        self.nombre = unique_id
+        self.color = "red"
+        self.tiempo = 10
+    def change(self):
+        self.tiempo -= 1
+        if(self.tiempo == 0 and self.color == "red"):
+            self.color = "green"
+            self.tiempo = 10
+        elif(self.tiempo == 0 and self.color == "green"):
+            self.color = "red"
+            self.tiempo = 10
+    def step(self):
+        self.change()
+
+class SemaforoAgent4(mesa.Agent):
+    def __init__(self, unique_id, model):
+        super().__init__(unique_id, model)
+        self.nombre = unique_id
+        self.color = "red"
+        self.tiempo = 10
+    def change(self):
+        self.tiempo -= 1
+        if(self.tiempo == 0 and self.color == "red"):
+            self.color = "green"
+            self.tiempo = 10
+        elif(self.tiempo == 0 and self.color == "green"):
+            self.color = "red"
+            self.tiempo = 10
+    def step(self):
+        self.change()
+
+class entornoAgent(mesa.Agent):
+    def __init__(self, unique_id, model):
+        super().__init__(unique_id, model)
+        self.nombre = unique_id
+        self.color = "black"
     def step(self):
         pass
