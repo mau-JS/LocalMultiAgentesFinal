@@ -6,7 +6,7 @@ def agent_portrayal(agent):
         portrayal = {"Shape": "circle",
                  "Filled": "true",
                  "Layer": 0,
-                 "Color": "blue",
+                 "Color": agent.color,
                  "r": 0.5}
         #Caso en el que sea semáforo
         return portrayal

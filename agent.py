@@ -12,6 +12,7 @@ class CarAgent1(mesa.Agent):
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
         self.nombre = unique_id
+        self.color = "red"
     def move(self):
         x,y = self.pos
         self.newPos = (x + 1 , y)
@@ -30,6 +31,7 @@ class CarAgent2(mesa.Agent):
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
         self.nombre = unique_id
+        self.color = "orange"
     def move(self):
         x,y = self.pos
         self.newPos = (x - 1, y)
@@ -49,6 +51,7 @@ class CarAgent3(mesa.Agent):
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
         self.nombre = unique_id
+        self.color = "green"
     def move(self):
         x,y = self.pos
         self.newPos = (x, y + 1)
@@ -67,6 +70,7 @@ class CarAgent3(mesa.Agent):
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
         self.nombre = unique_id
+        self.color = "purple"
     def move(self):
         x,y = self.pos
         self.newPos = (x, y + 1)
