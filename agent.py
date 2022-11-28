@@ -14,25 +14,22 @@ class CarAgent1(mesa.Agent):
         self.nombre = unique_id
         self.color = "purple"
         self.moverStatus = None
-    
-
+        self.cantidad = 0
     def verificaSemaforo(self):
-        self.moverStatus = None
-        celdasAlrededor = self.model.grid.get_neighborhood(self.pos, moore = True, include_center = False, radius = 2)
-
+        celdasAlrededor = self.model.grid.get_neighbors(self.pos, moore = True, include_center = False, radius = 3)
         for i in celdasAlrededor:
-            contenidoCelda = self.model.grid.get_cell_list_contents(i)
-            if(isinstance(contenidoCelda,SemaforoAgent1)):
-                if(contenidoCelda.color == "red"):
-                    moverStatus = False
-                    break
-                elif(contenidoCelda.color == "yellow" or contenidoCelda.color == "green"):
-                    moverStatus = True
-                    break
-            else:
-                moverStatus = True
-        if moverStatus == True:
-                self.move()
+            if (isinstance(i, SemaforoAgent1)):
+                self.moverStatus = False
+                break
+            else: 
+                self.moverStatus = True
+
+        if self.moverStatus == True:
+            self.move()
+            self.moverStatus = None
+        else:
+            self.stop()
+            self.moverStatus = None
 #Coche carril inferior a la izquierda
     def move(self):
         x,y = self.pos
@@ -43,8 +40,21 @@ class CarAgent1(mesa.Agent):
             "y": str(self.newPos[1] - y)
             }
 
+    def stop(self):
+        x,y = self.pos
+        self.newPos = (x , y)
+        self.model.grid.move_agent(self,self.newPos)
+        self.velocidadAgente = {
+            "x": str(self.newPos[0] - x),
+            "y": str(self.newPos[1] - y)
+            }
+
     def step(self):
-        self.move()
+        self.verificaSemaforo()
+
+        #for i in self.celdasAlrededor:
+        #    print(str(self.unique_id) +" "+ str(self.celdasAlrededor))
+        #self.move()
 
 #Coche se dirige izquierda
 class CarAgent2(mesa.Agent):
