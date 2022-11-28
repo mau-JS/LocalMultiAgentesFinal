@@ -19,8 +19,11 @@ class CarAgent1(mesa.Agent):
         celdasAlrededor = self.model.grid.get_neighbors(self.pos, moore = True, include_center = False, radius = 3)
         for i in celdasAlrededor:
             if (isinstance(i, SemaforoAgent1)):
-                self.moverStatus = False
-                break
+                if(i.color == "red" or i.color == "yellow"):
+                    self.moverStatus = False
+                    break
+                elif(i.color == "green"):
+                    self.moverStatus = True
             else: 
                 self.moverStatus = True
 
