@@ -18,6 +18,20 @@ class CarAgent1(mesa.Agent):
         self.cantidad = 0
         self.seleccion = ""
         self.seleccion2 = ""
+        self.seleccion3 = ""
+
+    def moveAbajo(self):
+        x,y = self.pos
+        if self.model.grid.is_cell_empty((x, y - 1)):
+            self.newPos = (x , y - 1)
+            self.model.grid.move_agent(self,self.newPos)
+            self.velocidadAgente = {
+                "x": str(self.newPos[0] - x),
+                "y": str(self.newPos[1] - y)
+            }
+        else:
+            self.stop()
+
 
     def moveIzquierda(self):
         x,y = self.pos
@@ -45,11 +59,13 @@ class CarAgent1(mesa.Agent):
 
     def seleccionaDireccion(self):
         posicionIzquierda = random.randint(41,45)
-        if self.pos[1] == posicionIzquierda and self.seleccion2 == "":
+        if self.pos[1] == posicionIzquierda and self.seleccion2 == "" and self.pos[0] >=20:
             self.seleccion2 = "izquierda"
             self.moveIzquierda()
-
-        if self.seleccion == "" and self.pos[0] == 21:
+        elif self.pos[0] < 20 and self.pos[1] > 0 and self.seleccion3 == "":
+            self.seleccion3 = "abajo"
+            self.moveAbajo()
+        elif self.seleccion == "" and self.pos[0] == 21:
             self.seleccion = random.choice(("arriba","derecha"))
             if self.seleccion == "arriba":
                 self.moveArriba()
@@ -63,6 +79,9 @@ class CarAgent1(mesa.Agent):
             self.moveArriba()
 
         elif self.seleccion == "derecha":
+            self.verificaSemaforo()
+
+        elif self.seleccion == "abajo":
             self.verificaSemaforo()
         else:
             self.verificaSemaforo()
