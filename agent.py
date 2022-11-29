@@ -16,7 +16,7 @@ class CarAgent1(mesa.Agent):
         self.moverStatus = None
         self.cantidad = 0
     def verificaSemaforo(self):
-        celdasAlrededor = self.model.grid.get_neighbors(self.pos, moore = True, include_center = False, radius = 3)
+        celdasAlrededor = self.model.grid.get_neighbors(self.pos, moore = True, include_center = False, radius = 2)
         for i in celdasAlrededor:
             if (isinstance(i, SemaforoAgent1)):
                 if(i.color == "red" or i.color == "yellow"):
@@ -24,14 +24,18 @@ class CarAgent1(mesa.Agent):
                     break
                 elif(i.color == "green"):
                     self.moverStatus = True
+                    break
             else: 
                 self.moverStatus = True
 
         if self.moverStatus == True:
             self.move()
             self.moverStatus = None
-        else:
+        elif self.moverStatus == False:
             self.stop()
+            self.moverStatus = None
+        else:
+            self.move()
             self.moverStatus = None
 #Coche carril inferior a la izquierda
     def move(self):
