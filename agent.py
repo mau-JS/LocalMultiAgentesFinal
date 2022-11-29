@@ -17,6 +17,19 @@ class CarAgent1(mesa.Agent):
         self.moverStatus = None
         self.cantidad = 0
         self.seleccion = ""
+        self.seleccion2 = ""
+
+    def moveIzquierda(self):
+        x,y = self.pos
+        if self.model.grid.is_cell_empty((x - 1, y)):
+            self.newPos = (x - 1 , y)
+            self.model.grid.move_agent(self,self.newPos)
+            self.velocidadAgente = {
+                "x": str(self.newPos[0] - x),
+                "y": str(self.newPos[1] - y)
+            }
+        else:
+            self.stop()
 
     def moveArriba(self):
         x,y = self.pos
@@ -31,15 +44,24 @@ class CarAgent1(mesa.Agent):
             self.stop()
 
     def seleccionaDireccion(self):
-        x,y = self.pos
+        posicionIzquierda = random.randint(41,45)
+        if self.pos[1] == posicionIzquierda and self.seleccion2 == "":
+            self.seleccion2 = "izquierda"
+            self.moveIzquierda()
+
         if self.seleccion == "" and self.pos[0] == 21:
             self.seleccion = random.choice(("arriba","derecha"))
             if self.seleccion == "arriba":
                 self.moveArriba()
             elif self.seleccion == "derecha":
                 self.verificaSemaforo()
+
+        elif self.seleccion2 == "izquierda":
+            self.moveIzquierda()
+
         elif self.seleccion == "arriba":
             self.moveArriba()
+
         elif self.seleccion == "derecha":
             self.verificaSemaforo()
         else:
