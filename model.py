@@ -8,7 +8,7 @@ from agent import *
 vec = []
 posicionAgent = []
 posicionStep = []
-choices = (CarAgent1,CarAgent2,CarAgent3,CarAgent4)
+choices = (CarAgent1,CarAgent1,CarAgent1)
 selecciones = []
 def compute_gini(model):
     return 5

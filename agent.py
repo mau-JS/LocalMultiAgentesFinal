@@ -59,12 +59,12 @@ class CarAgent1(mesa.Agent):
 
     def seleccionaDireccion(self):
         posicionIzquierda = random.randint(41,45)
-        if self.pos[1] == posicionIzquierda and self.seleccion2 == "" and self.pos[0] >=20:
+        if self.pos[1] == posicionIzquierda and self.seleccion2 == "" and self.pos[0] >= 20:
             self.seleccion2 = "izquierda"
             self.moveIzquierda()
-        elif self.pos[0] < 20 and self.pos[1] > 0 and self.seleccion3 == "":
-            self.seleccion3 = "abajo"
-            self.moveAbajo()
+
+
+
         elif self.seleccion == "" and self.pos[0] == 21:
             self.seleccion = random.choice(("arriba","derecha"))
             if self.seleccion == "arriba":
@@ -81,8 +81,12 @@ class CarAgent1(mesa.Agent):
         elif self.seleccion == "derecha":
             self.verificaSemaforo()
 
+        elif self.pos[0] < 20 and self.pos[1] >= 30 and self.seleccion3 == "":
+            self.seleccion3 = "abajo"
+            self.moveAbajo()
+            
         elif self.seleccion == "abajo":
-            self.verificaSemaforo()
+            self.moveAbajo()
         else:
             self.verificaSemaforo()
 
