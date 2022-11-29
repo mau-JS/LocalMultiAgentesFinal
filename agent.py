@@ -107,12 +107,15 @@ class CarAgent2(mesa.Agent):
 
     def move(self):
         x,y = self.pos
-        self.newPos = (x - 1, y)
-        self.model.grid.move_agent(self,self.newPos)
-        self.velocidadAgente = {
-            "x": str(self.newPos[0] - x),
-            "y": str(self.newPos[1] - y)
+        if self.model.grid.is_cell_empty((x - 1, y)):
+            self.newPos = (x - 1 , y)
+            self.model.grid.move_agent(self,self.newPos)
+            self.velocidadAgente = {
+                "x": str(self.newPos[0] - x),
+                "y": str(self.newPos[1] - y)
             }
+        else:
+            self.stop()
 
     def step(self):
         self.verificaSemaforo()
@@ -161,13 +164,15 @@ class CarAgent3(mesa.Agent):
 
     def move(self):
         x,y = self.pos
-        self.newPos = (x, y + 1)
-        self.model.grid.move_agent(self,self.newPos)
-        self.velocidadAgente = {
-            "x": str(self.newPos[0] - x),
-            "y": str(self.newPos[1] - y)
+        if self.model.grid.is_cell_empty((x, y + 1)):
+            self.newPos = (x , y + 1)
+            self.model.grid.move_agent(self,self.newPos)
+            self.velocidadAgente = {
+                "x": str(self.newPos[0] - x),
+                "y": str(self.newPos[1] - y)
             }
-
+        else:
+            self.stop()
     def step(self):
         self.verificaSemaforo()
 
@@ -212,13 +217,15 @@ class CarAgent4(mesa.Agent):
             }
     def move(self):
         x,y = self.pos
-        self.newPos = (x, y-1)
-        self.model.grid.move_agent(self,self.newPos)
-        self.velocidadAgente = {
-            "x": str(self.newPos[0] - x),
-            "y": str(self.newPos[1] - y)
+        if self.model.grid.is_cell_empty((x, y - 1)):
+            self.newPos = (x , y - 1)
+            self.model.grid.move_agent(self,self.newPos)
+            self.velocidadAgente = {
+                "x": str(self.newPos[0] - x),
+                "y": str(self.newPos[1] - y)
             }
-
+        else:
+            self.stop()
     def step(self):
         self.verificaSemaforo()
 
