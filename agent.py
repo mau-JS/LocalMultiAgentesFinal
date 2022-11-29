@@ -15,6 +15,7 @@ class CarAgent1(mesa.Agent):
         self.color = "purple"
         self.moverStatus = None
         self.cantidad = 0
+
     def verificaSemaforo(self):
         celdasAlrededor = self.model.grid.get_neighbors(self.pos, moore = True, include_center = False, radius = 2)
         for i in celdasAlrededor:
@@ -70,6 +71,40 @@ class CarAgent2(mesa.Agent):
         super().__init__(unique_id, model)
         self.nombre = unique_id
         self.color = "orange"
+        self.moverStatus = None
+
+    def verificaSemaforo(self):
+        celdasAlrededor = self.model.grid.get_neighbors(self.pos, moore = True, include_center = False, radius = 2)
+        for i in celdasAlrededor:
+            if (isinstance(i, SemaforoAgent2)):
+                if(i.color == "red" or i.color == "yellow"):
+                    self.moverStatus = False
+                    break
+                elif(i.color == "green"):
+                    self.moverStatus = True
+                    break
+            else: 
+                self.moverStatus = True
+
+        if self.moverStatus == True:
+            self.move()
+            self.moverStatus = None
+        elif self.moverStatus == False:
+            self.stop()
+            self.moverStatus = None
+        else:
+            self.move()
+            self.moverStatus = None
+
+    def stop(self):
+        x,y = self.pos
+        self.newPos = (x , y)
+        self.model.grid.move_agent(self,self.newPos)
+        self.velocidadAgente = {
+            "x": str(self.newPos[0] - x),
+            "y": str(self.newPos[1] - y)
+            }
+
     def move(self):
         x,y = self.pos
         self.newPos = (x - 1, y)
@@ -80,7 +115,7 @@ class CarAgent2(mesa.Agent):
             }
 
     def step(self):
-        self.move()
+        self.verificaSemaforo()
 
 
 #Coche se dirige arriba
@@ -90,6 +125,40 @@ class CarAgent3(mesa.Agent):
         super().__init__(unique_id, model)
         self.nombre = unique_id
         self.color = "blue"
+        self.moverStatus = None
+
+    def verificaSemaforo(self):
+        celdasAlrededor = self.model.grid.get_neighbors(self.pos, moore = True, include_center = False, radius = 2)
+        for i in celdasAlrededor:
+            if (isinstance(i, SemaforoAgent3)):
+                if(i.color == "red" or i.color == "yellow"):
+                    self.moverStatus = False
+                    break
+                elif(i.color == "green"):
+                    self.moverStatus = True
+                    break
+            else: 
+                self.moverStatus = True
+
+        if self.moverStatus == True:
+            self.move()
+            self.moverStatus = None
+        elif self.moverStatus == False:
+            self.stop()
+            self.moverStatus = None
+        else:
+            self.move()
+            self.moverStatus = None
+            
+    def stop(self):
+        x,y = self.pos
+        self.newPos = (x , y)
+        self.model.grid.move_agent(self,self.newPos)
+        self.velocidadAgente = {
+            "x": str(self.newPos[0] - x),
+            "y": str(self.newPos[1] - y)
+            }
+
     def move(self):
         x,y = self.pos
         self.newPos = (x, y + 1)
@@ -100,7 +169,7 @@ class CarAgent3(mesa.Agent):
             }
 
     def step(self):
-        self.move()
+        self.verificaSemaforo()
 
 #Se dirige abajo carril derecho
 class CarAgent4(mesa.Agent):
@@ -109,6 +178,38 @@ class CarAgent4(mesa.Agent):
         super().__init__(unique_id, model)
         self.nombre = unique_id
         self.color = "black"
+        self.moverStatus = None
+
+    def verificaSemaforo(self):
+        celdasAlrededor = self.model.grid.get_neighbors(self.pos, moore = True, include_center = False, radius = 2)
+        for i in celdasAlrededor:
+            if (isinstance(i, SemaforoAgent4)):
+                if(i.color == "red" or i.color == "yellow"):
+                    self.moverStatus = False
+                    break
+                elif(i.color == "green"):
+                    self.moverStatus = True
+                    break
+            else: 
+                self.moverStatus = True
+
+        if self.moverStatus == True:
+            self.move()
+            self.moverStatus = None
+        elif self.moverStatus == False:
+            self.stop()
+            self.moverStatus = None
+        else:
+            self.move()
+            self.moverStatus = None
+    def stop(self):
+        x,y = self.pos
+        self.newPos = (x , y)
+        self.model.grid.move_agent(self,self.newPos)
+        self.velocidadAgente = {
+            "x": str(self.newPos[0] - x),
+            "y": str(self.newPos[1] - y)
+            }
     def move(self):
         x,y = self.pos
         self.newPos = (x, y-1)
@@ -119,7 +220,7 @@ class CarAgent4(mesa.Agent):
             }
 
     def step(self):
-        self.move()
+        self.verificaSemaforo()
 
 class SemaforoAgent1(mesa.Agent):
     def __init__(self, unique_id, model):
