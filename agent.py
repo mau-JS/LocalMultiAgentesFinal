@@ -28,7 +28,6 @@ class CarAgent1(mesa.Agent):
                     break
             else: 
                 self.moverStatus = True
-
         if self.moverStatus == True:
             self.move()
             self.moverStatus = None
@@ -41,13 +40,15 @@ class CarAgent1(mesa.Agent):
 #Coche carril inferior a la izquierda
     def move(self):
         x,y = self.pos
-        self.newPos = (x + 1 , y)
-        self.model.grid.move_agent(self,self.newPos)
-        self.velocidadAgente = {
-            "x": str(self.newPos[0] - x),
-            "y": str(self.newPos[1] - y)
+        if self.model.grid.is_cell_empty((x + 1, y)):
+            self.newPos = (x + 1 , y)
+            self.model.grid.move_agent(self,self.newPos)
+            self.velocidadAgente = {
+                "x": str(self.newPos[0] - x),
+                "y": str(self.newPos[1] - y)
             }
-
+        else:
+            self.stop()
     def stop(self):
         x,y = self.pos
         self.newPos = (x , y)
@@ -59,7 +60,6 @@ class CarAgent1(mesa.Agent):
 
     def step(self):
         self.verificaSemaforo()
-
         #for i in self.celdasAlrededor:
         #    print(str(self.unique_id) +" "+ str(self.celdasAlrededor))
         #self.move()
