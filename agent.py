@@ -9,12 +9,52 @@ import json
 #Coche carril superior a la derecha
 class CarAgent1(mesa.Agent):
     global vectorPosiciones
+
     def __init__(self, unique_id, model):
         super().__init__(unique_id, model)
         self.nombre = unique_id
         self.color = "purple"
         self.moverStatus = None
         self.cantidad = 0
+        self.seleccion = ""
+
+    def moveArriba(self):
+        x,y = self.pos
+        if self.model.grid.is_cell_empty((x, y + 1)):
+            self.newPos = (x , y + 1)
+            self.model.grid.move_agent(self,self.newPos)
+            self.velocidadAgente = {
+                "x": str(self.newPos[0] - x),
+                "y": str(self.newPos[1] - y)
+            }
+        else:
+            self.stop()
+
+    def seleccionaDireccion(self):
+        x,y = self.pos
+        if self.seleccion == "" and self.pos[0] == 21:
+            self.seleccion = random.choice(("arriba","derecha"))
+            if self.seleccion == "arriba":
+                self.moveArriba()
+            elif self.seleccion == "derecha":
+                self.verificaSemaforo()
+        elif self.seleccion == "arriba":
+            self.moveArriba()
+        elif self.seleccion == "derecha":
+            self.verificaSemaforo()
+        else:
+            self.verificaSemaforo()
+
+
+
+    def stop(self):
+        x,y = self.pos
+        self.newPos = (x , y)
+        self.model.grid.move_agent(self,self.newPos)
+        self.velocidadAgente = {
+            "x": str(self.newPos[0] - x),
+            "y": str(self.newPos[1] - y)
+            }
 
     def verificaSemaforo(self):
         celdasAlrededor = self.model.grid.get_neighbors(self.pos, moore = True, include_center = False, radius = 2)
@@ -59,7 +99,7 @@ class CarAgent1(mesa.Agent):
             }
 
     def step(self):
-        self.verificaSemaforo()
+        self.seleccionaDireccion()
         #for i in self.celdasAlrededor:
         #    print(str(self.unique_id) +" "+ str(self.celdasAlrededor))
         #self.move()
