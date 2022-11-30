@@ -19,7 +19,7 @@ for i in range (20):
 
     if eleccion == CarAgent1:
         m = random.randrange(0,10)
-        n = random.randrange(25,30)
+        n = random.choice([25,26,28,29,30])
         a = [m,n]
         vec.append(a)
         selecciones.append(eleccion)
