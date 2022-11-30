@@ -17,7 +17,7 @@ class CarAgent1(mesa.Agent):
         self.moverStatus = None
         self.cantidad = 0
         self.seleccion = ""
-        self.seleccion2 = ""
+
     def moveAbajo(self):
         x,y = self.pos
         if self.model.grid.is_cell_empty((x, y - 1)):
@@ -57,13 +57,14 @@ class CarAgent1(mesa.Agent):
 #Seleccion2 izquierda
     def seleccionaDireccion(self):
         random1 = random.randint(20,22) #Carril abajo derecha
-        random2 = random.randint(40,42)
+        #random2 = random.randint(40,42)
         #random2 = random.randint(25,30)#Carril Arriba derecha
 
         #Primera Intersección CarAgent1
-        if (self.seleccion == "" and self.pos[0] == random1 and (self.pos[1] == 29 or self.pos[1] == 30)) :
+        if (self.pos[0] == random1 and (self.pos[1] == 29 or self.pos[1] == 30)) :
 
-            self.seleccion = random.choice(("arriba","derecha"))
+            tempSeleccion = random.choice(("arriba","derecha"))
+            self.seleccion = tempSeleccion
 
             if self.seleccion == "arriba":
                 self.moveArriba()
@@ -72,18 +73,41 @@ class CarAgent1(mesa.Agent):
                 self.verificaSemaforo()
                 
         #Segunda Intersección CarAgent1
-        elif (self.seleccion2 == "" and self.pos[1] == random2 and(self.pos[0] == 20 or self.pos[0] == 21 or self.pos[0] == 22)) :
-            self.seleccion2 = "izquierda"
+        elif(self.pos[0] == 40):
+            self.seleccion = "arriba"
+            self.moveArriba()
+
+        elif ( self.pos[1] == 41 and(self.pos[0] == 20 or self.pos[0] == 21 or self.pos[0] == 22)) :
+            self.seleccion = "izquierda"
             self.moveIzquierda()
 
-        elif self.seleccion2 == "izquierda":
+        elif ( self.pos[1] == 41 and self.pos[0] == 9) :
+            self.seleccion = "abajo"
+            self.moveAbajo()
+            
+        elif(self.pos[1] == 40 and self.pos[0] == 40):
+            self.seleccion = "izquierda"
             self.moveIzquierda()
-        elif self.seleccion == "arriba":
-            self.moveArriba()
+        
+
         elif self.seleccion == "derecha":
             self.verificaSemaforo()
+
+        elif self.seleccion == "izquierda":
+            self.moveIzquierda()
+
+        elif self.seleccion == "arriba":
+            self.moveArriba()
+
+        elif self.seleccion == "abajo":
+            self.moveAbajo()
+
+        #Tercera Intersección CarAgent1
+
         else:
             self.verificaSemaforo()
+        
+
 
 
 
