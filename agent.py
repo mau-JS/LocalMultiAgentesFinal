@@ -183,53 +183,76 @@ class CarAgent2(mesa.Agent):
         self.nombre = unique_id
         self.color = "orange"
         self.moverStatus = None
-        
+        self.seleccion = ""
+
+    def moveAbajo(self):
+        x,y = self.pos
+        if self.model.grid.is_cell_empty((x, y - 1)):
+            self.newPos = (x , y - 1)
+            self.model.grid.move_agent(self,self.newPos)
+            self.velocidadAgente = {
+                "x": str(self.newPos[0] - x),
+                "y": str(self.newPos[1] - y)
+            }
+        else:
+            self.stop()
+
+
+    def moveDerecha(self):
+        x,y = self.pos
+        if self.model.grid.is_cell_empty((x + 1, y)):
+            self.newPos = (x + 1 , y)
+            self.model.grid.move_agent(self,self.newPos)
+            self.velocidadAgente = {
+                "x": str(self.newPos[0] - x),
+                "y": str(self.newPos[1] - y)
+            }
+        else:
+            self.stop()
+
+    def moveArriba(self):
+        x,y = self.pos
+        if self.model.grid.is_cell_empty((x, y + 1)):
+            self.newPos = (x , y + 1)
+            self.model.grid.move_agent(self,self.newPos)
+            self.velocidadAgente = {
+                "x": str(self.newPos[0] - x),
+                "y": str(self.newPos[1] - y)
+            }
+        else:
+            self.stop()
+
     def seleccionaDireccion(self):
-        random1 = random.randint(20,22) #Carril abajo derecha
+        random1 = random.randint(27,29) #Carril abajo derecha
         #random2 = random.randint(25,30)#Carril Arriba derecha
 
-        #Cuadrícula izquierda
+        #Cuadrícula abajo derecha
 
-        if (self.pos[0] == random1 and (self.pos[1] == 29 or self.pos[1] == 28)) :
+        if (self.pos[0] == random1 and (self.pos[1] == 20 or self.pos[1] == 21)) :
 
-            tempSeleccion = random.choice(("arriba","derecha"))
+            tempSeleccion = random.choice(("abajo","izquierda"))
             self.seleccion = tempSeleccion
-
-            if self.seleccion == "arriba":
-                self.moveArriba()
-
-            elif self.seleccion == "derecha":
+            if self.seleccion == "abajo":
+                self.moveAbajo()
+            elif self.seleccion == "izquierda":
                 self.verificaSemaforo()
-        
-        elif((self.pos[0] == 20 or self.pos[0] == 21 or self.pos[0] == 22) and (self.pos[1] == 41)):
-            self.seleccion = "izquierda"
-            self.moveIzquierda()
-            
-
-        elif(self.pos[0] == 9 and self.pos[1] >= 30):
-            self.seleccion = "abajo"
-            self.moveAbajo()    
-        elif(self.pos[0] == 9 and self.pos[1] == 28):
+        elif ((self.pos[0] == 27 or self.pos[0] == 28 or self.pos[0] == 29) and self.pos[1] == 8):
             self.seleccion = "derecha"
-            self.verificaSemaforo()
+            self.moveDerecha()
 
-        #Cuadrícula derecha
-        elif(self.pos[0] == 41 and self.pos[1] < 40 ):
+        elif(self.pos[0] == 41 and self.pos[1] <= 19):
             self.seleccion = "arriba"
             self.moveArriba()
 
-        elif(self.pos[0] == 41 and self.pos[1] >= 40 ):
+        elif(self.pos[0] == 41 and self.pos[1] == 20):
             self.seleccion = "izquierda"
-            self.moveIzquierda()
-
-
-        
+            self.verificaSemaforo()
         #Movimiento General
         elif self.seleccion == "derecha":
-            self.verificaSemaforo()
+            self.moveDerecha()
 
         elif self.seleccion == "izquierda":
-            self.moveIzquierda()
+            self.verificaSemaforo()
 
         elif self.seleccion == "arriba":
             self.moveArriba()
@@ -241,6 +264,7 @@ class CarAgent2(mesa.Agent):
 
         else:
             self.verificaSemaforo()
+
     def verificaSemaforo(self):
         celdasAlrededor = self.model.grid.get_neighbors(self.pos, moore = True, include_center = False, radius = 2)
         for i in celdasAlrededor:
@@ -286,7 +310,7 @@ class CarAgent2(mesa.Agent):
             self.stop()
 
     def step(self):
-        self.verificaSemaforo()
+        self.seleccionaDireccion()
 
 
 #Coche se dirige arriba
