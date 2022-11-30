@@ -60,7 +60,7 @@ class CarAgent1(mesa.Agent):
         random2 = random.randint(40,42)
         #random2 = random.randint(25,30)#Carril Arriba derecha
 
-        #Cuadrícula derecha
+        #Cuadrícula izquierda
 
         if (self.pos[0] == random1 and (self.pos[1] == 29 or self.pos[1] == 28)) :
 
@@ -85,20 +85,18 @@ class CarAgent1(mesa.Agent):
             self.seleccion = "derecha"
             self.verificaSemaforo()
 
-   
-
-    #    elif((self.pos[0] == 7 or self.pos[0] == 8 or self.pos[0] == 9) and self.pos[1] == 30):
-          #  self.moveAbajo()
-          # self.seleccion == "derecha"
-           # self.verificaSemaforo()
         #Cuadrícula derecha
         elif(self.pos[0] == 40 and self.pos[1] < 40 ):
             self.seleccion = "arriba"
             self.moveArriba()
 
+        elif(self.pos[0] == 40 and self.pos[1] >= 40 ):
+            self.seleccion = "izquierda"
+            self.moveIzquierda()
+
 
         
-
+        #Movimiento General
         elif self.seleccion == "derecha":
             self.verificaSemaforo()
 
