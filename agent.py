@@ -183,7 +183,64 @@ class CarAgent2(mesa.Agent):
         self.nombre = unique_id
         self.color = "orange"
         self.moverStatus = None
+        
+    def seleccionaDireccion(self):
+        random1 = random.randint(20,22) #Carril abajo derecha
+        #random2 = random.randint(25,30)#Carril Arriba derecha
 
+        #Cuadrícula izquierda
+
+        if (self.pos[0] == random1 and (self.pos[1] == 29 or self.pos[1] == 28)) :
+
+            tempSeleccion = random.choice(("arriba","derecha"))
+            self.seleccion = tempSeleccion
+
+            if self.seleccion == "arriba":
+                self.moveArriba()
+
+            elif self.seleccion == "derecha":
+                self.verificaSemaforo()
+        
+        elif((self.pos[0] == 20 or self.pos[0] == 21 or self.pos[0] == 22) and (self.pos[1] == 41)):
+            self.seleccion = "izquierda"
+            self.moveIzquierda()
+            
+
+        elif(self.pos[0] == 9 and self.pos[1] >= 30):
+            self.seleccion = "abajo"
+            self.moveAbajo()    
+        elif(self.pos[0] == 9 and self.pos[1] == 28):
+            self.seleccion = "derecha"
+            self.verificaSemaforo()
+
+        #Cuadrícula derecha
+        elif(self.pos[0] == 41 and self.pos[1] < 40 ):
+            self.seleccion = "arriba"
+            self.moveArriba()
+
+        elif(self.pos[0] == 41 and self.pos[1] >= 40 ):
+            self.seleccion = "izquierda"
+            self.moveIzquierda()
+
+
+        
+        #Movimiento General
+        elif self.seleccion == "derecha":
+            self.verificaSemaforo()
+
+        elif self.seleccion == "izquierda":
+            self.moveIzquierda()
+
+        elif self.seleccion == "arriba":
+            self.moveArriba()
+
+        elif self.seleccion == "abajo":
+            self.moveAbajo()
+
+        #Tercera Intersección CarAgent1
+
+        else:
+            self.verificaSemaforo()
     def verificaSemaforo(self):
         celdasAlrededor = self.model.grid.get_neighbors(self.pos, moore = True, include_center = False, radius = 2)
         for i in celdasAlrededor:

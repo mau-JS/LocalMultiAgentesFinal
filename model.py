@@ -8,7 +8,7 @@ from agent import *
 vec = []
 posicionAgent = []
 posicionStep = []
-choices = (CarAgent1,CarAgent1,CarAgent1)
+choices = (CarAgent1,CarAgent2)
 selecciones = []
 def compute_gini(model):
     return 5
@@ -26,7 +26,7 @@ for i in range (20):
 
     if eleccion == CarAgent2:
         m = random.randrange(40,50)
-        n = random.randrange(20,25)
+        n = random.choice([20,21,23,24,25])
         a = [m,n]
         vec.append(a)
         selecciones.append(eleccion)
