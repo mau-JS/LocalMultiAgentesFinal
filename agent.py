@@ -18,8 +18,6 @@ class CarAgent1(mesa.Agent):
         self.cantidad = 0
         self.seleccion = ""
         self.seleccion2 = ""
-        self.seleccion3 = ""
-
     def moveAbajo(self):
         x,y = self.pos
         if self.model.grid.is_cell_empty((x, y - 1)):
@@ -56,39 +54,37 @@ class CarAgent1(mesa.Agent):
             }
         else:
             self.stop()
-
+#Seleccion2 izquierda
     def seleccionaDireccion(self):
-        posicionIzquierda = random.randint(41,45)
-        if self.pos[1] == posicionIzquierda and self.seleccion2 == "" and self.pos[0] >= 20:
+        random1 = random.randint(20,22) #Carril abajo derecha
+        random2 = random.randint(40,42)
+        #random2 = random.randint(25,30)#Carril Arriba derecha
+
+        #Primera Intersección CarAgent1
+        if (self.seleccion == "" and self.pos[0] == random1 and (self.pos[1] == 29 or self.pos[1] == 30)) :
+
+            self.seleccion = random.choice(("arriba","derecha"))
+
+            if self.seleccion == "arriba":
+                self.moveArriba()
+
+            elif self.seleccion == "derecha":
+                self.verificaSemaforo()
+                
+        #Segunda Intersección CarAgent1
+        elif (self.seleccion2 == "" and self.pos[1] == random2 and(self.pos[0] == 20 or self.pos[0] == 21 or self.pos[0] == 22)) :
             self.seleccion2 = "izquierda"
             self.moveIzquierda()
 
-
-
-        elif self.seleccion == "" and self.pos[0] == 21:
-            self.seleccion = random.choice(("arriba","derecha"))
-            if self.seleccion == "arriba":
-                self.moveArriba()
-            elif self.seleccion == "derecha":
-                self.verificaSemaforo()
-
         elif self.seleccion2 == "izquierda":
             self.moveIzquierda()
-
         elif self.seleccion == "arriba":
             self.moveArriba()
-
         elif self.seleccion == "derecha":
             self.verificaSemaforo()
-
-        elif self.pos[0] < 20 and self.pos[1] >= 30 and self.seleccion3 == "":
-            self.seleccion3 = "abajo"
-            self.moveAbajo()
-            
-        elif self.seleccion == "abajo":
-            self.moveAbajo()
         else:
             self.verificaSemaforo()
+
 
 
 

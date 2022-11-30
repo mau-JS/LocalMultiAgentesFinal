@@ -12,8 +12,8 @@ choices = (CarAgent1,CarAgent1,CarAgent1)
 selecciones = []
 def compute_gini(model):
     return 5
-
-for i in range (10):
+#Cambiar esta linea
+for i in range (20):
     #CarAgentType1
     eleccion = random.choice(choices)
 

@@ -17,7 +17,7 @@ def agent_portrayal(agent):
 
 grid = mesa.visualization.CanvasGrid(agent_portrayal, 50, 50, 500, 500)
 server = mesa.visualization.ModularServer(
-    CarModel, [grid], "Car Model", {"N": 10, "width": 50, "height": 50}
+    CarModel, [grid], "Car Model", {"N": 20, "width": 50, "height": 50}
 )
 server.port = 8521 # The default
 server.launch()
