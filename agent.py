@@ -57,11 +57,12 @@ class CarAgent1(mesa.Agent):
 #Seleccion2 izquierda
     def seleccionaDireccion(self):
         random1 = random.randint(20,22) #Carril abajo derecha
-        #random2 = random.randint(40,42)
+        random2 = random.randint(40,42)
         #random2 = random.randint(25,30)#Carril Arriba derecha
 
-        #Primera Intersección CarAgent1
-        if (self.pos[0] == random1 and (self.pos[1] == 29 or self.pos[1] == 30)) :
+        #Cuadrícula derecha
+
+        if (self.pos[0] == random1 and (self.pos[1] == 29 or self.pos[1] == 28)) :
 
             tempSeleccion = random.choice(("arriba","derecha"))
             self.seleccion = tempSeleccion
@@ -71,23 +72,31 @@ class CarAgent1(mesa.Agent):
 
             elif self.seleccion == "derecha":
                 self.verificaSemaforo()
-                
-        #Segunda Intersección CarAgent1
-        elif(self.pos[0] == 40):
+        
+        elif((self.pos[0] == 20 or self.pos[0] == 21 or self.pos[0] == 22) and (self.pos[1] == 40)):
+            self.seleccion = "izquierda"
+            self.moveIzquierda()
+            
+
+        elif(self.pos[0] == 9 and self.pos[1] >= 30):
+            self.seleccion = "abajo"
+            self.moveAbajo()    
+        elif(self.pos[0] == 9 and self.pos[1] == 29):
+            self.seleccion = "derecha"
+            self.verificaSemaforo()
+
+   
+
+    #    elif((self.pos[0] == 7 or self.pos[0] == 8 or self.pos[0] == 9) and self.pos[1] == 30):
+          #  self.moveAbajo()
+          # self.seleccion == "derecha"
+           # self.verificaSemaforo()
+        #Cuadrícula derecha
+        elif(self.pos[0] == 40 and self.pos[1] < 40 ):
             self.seleccion = "arriba"
             self.moveArriba()
 
-        elif ( self.pos[1] == 41 and(self.pos[0] == 20 or self.pos[0] == 21 or self.pos[0] == 22)) :
-            self.seleccion = "izquierda"
-            self.moveIzquierda()
 
-        elif ( self.pos[1] == 41 and self.pos[0] == 9) :
-            self.seleccion = "abajo"
-            self.moveAbajo()
-            
-        elif(self.pos[1] == 40 and self.pos[0] == 40):
-            self.seleccion = "izquierda"
-            self.moveIzquierda()
         
 
         elif self.seleccion == "derecha":
