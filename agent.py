@@ -247,6 +247,17 @@ class CarAgent2(mesa.Agent):
         elif(self.pos[0] == 41 and self.pos[1] == 20):
             self.seleccion = "izquierda"
             self.verificaSemaforo()
+
+        #Cuadrícula abajo izquierda
+        elif(self.pos[0] == 8 and self.pos[1] > 19 ):
+            self.seleccion = "abajo"
+            self.moveAbajo()
+
+        elif(self.pos[0] == 8 and self.pos[1] < 9 ):
+            self.seleccion = "derecha"
+            self.moveDerecha()
+
+
         #Movimiento General
         elif self.seleccion == "derecha":
             self.moveDerecha()
