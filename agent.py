@@ -15,9 +15,9 @@ class CarAgent1(mesa.Agent):
         self.nombre = unique_id
         self.color = "purple"
         self.moverStatus = None
-        self.cantidad = 0
         self.seleccion = ""
-        
+        self.conteo = 0
+
     def moveAbajo(self):
         x,y = self.pos
         if self.model.grid.is_cell_empty((x, y - 1)):
@@ -120,6 +120,7 @@ class CarAgent1(mesa.Agent):
 
     def stop(self):
         x,y = self.pos
+        self.conteo += 1
         self.newPos = (x , y)
         self.model.grid.move_agent(self,self.newPos)
         self.velocidadAgente = {
@@ -184,6 +185,7 @@ class CarAgent2(mesa.Agent):
         self.color = "orange"
         self.moverStatus = None
         self.seleccion = ""
+        self.conteo = 0
 
     def moveAbajo(self):
         x,y = self.pos
@@ -301,6 +303,7 @@ class CarAgent2(mesa.Agent):
 
     def stop(self):
         x,y = self.pos
+        self.conteo += 1
         self.newPos = (x , y)
         self.model.grid.move_agent(self,self.newPos)
         self.velocidadAgente = {
@@ -333,7 +336,7 @@ class CarAgent3(mesa.Agent):
         self.color = "blue"
         self.moverStatus = None
         self.seleccion = ""
-
+        self.conteo = 0
     def moveAbajo(self):
         x,y = self.pos
         if self.model.grid.is_cell_empty((x, y - 1)):
@@ -434,6 +437,7 @@ class CarAgent3(mesa.Agent):
             
     def stop(self):
         x,y = self.pos
+        self.conteo += 1
         self.newPos = (x , y)
         self.model.grid.move_agent(self,self.newPos)
         self.velocidadAgente = {
@@ -464,6 +468,7 @@ class CarAgent4(mesa.Agent):
         self.color = "black"
         self.moverStatus = None
         self.seleccion = ""
+        self.conteo = 0
     def moveArriba(self):
         x,y = self.pos
         if self.model.grid.is_cell_empty((x, y + 1)):
@@ -569,6 +574,7 @@ class CarAgent4(mesa.Agent):
             self.moverStatus = None
     def stop(self):
         x,y = self.pos
+        self.conteo += 1
         self.newPos = (x , y)
         self.model.grid.move_agent(self,self.newPos)
         self.velocidadAgente = {

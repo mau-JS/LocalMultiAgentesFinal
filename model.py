@@ -10,8 +10,15 @@ posicionAgent = []
 posicionStep = []
 choices = (CarAgent1,CarAgent2,CarAgent3,CarAgent4)
 selecciones = []
+suma = 0
+
 def compute_gini(model):
-    return 5
+    global suma
+    for i in model.schedule.agents:
+        if (isinstance(i,CarAgent1) or isinstance(i,CarAgent2) or isinstance(i,CarAgent3) or isinstance(i,CarAgent4)):
+            suma += i.conteo
+    return suma
+
 #Cambiar esta linea
 for i in range (20):
     #CarAgentType1
