@@ -14,7 +14,7 @@ selecciones = []
 def compute_gini(model):
     acumulado = 0
     for i in model.schedule.agents:
-        if (isinstance(i,CarAgent1) or isinstance(i,CarAgent2)):
+        if (isinstance(i,CarAgent1) or isinstance(i,CarAgent2) or isinstance(i,CarAgent3) or isinstance(i,CarAgent4)):
             acumulado += i.conteo
     return acumulado
 
