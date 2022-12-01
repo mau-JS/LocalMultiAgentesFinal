@@ -16,8 +16,12 @@ def agent_portrayal(agent):
 #print(results_df.keys())
 
 grid = mesa.visualization.CanvasGrid(agent_portrayal, 50, 50, 500, 500)
+chart = mesa.visualization.ChartModule([{"Label": "Gini",
+                      "Color": "Black"}],
+                    data_collector_name='datacollector')
+
 server = mesa.visualization.ModularServer(
-    CarModel, [grid], "Car Model", {"N": 20, "width": 50, "height": 50}
+    CarModel, [grid,chart], "Car Model", {"N": 20, "width": 50, "height": 50}
 )
 server.port = 8521 # The default
 server.launch()

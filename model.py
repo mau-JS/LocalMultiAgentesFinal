@@ -60,7 +60,7 @@ class CarModel(mesa.Model):
         self.grid = mesa.space.MultiGrid(width,height,True)
         self.schedule = mesa.time.BaseScheduler(self)
         self.running = True
-        self.clases = (CarAgent1,CarAgent2,CarAgent3)
+        self.clases = (CarAgent1,CarAgent2,CarAgent3,CarAgent4)
         
 
         for i in range(10,20):
