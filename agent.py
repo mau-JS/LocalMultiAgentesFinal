@@ -17,7 +17,7 @@ class CarAgent1(mesa.Agent):
         self.moverStatus = None
         self.cantidad = 0
         self.seleccion = ""
-
+        
     def moveAbajo(self):
         x,y = self.pos
         if self.model.grid.is_cell_empty((x, y - 1)):
@@ -332,11 +332,87 @@ class CarAgent3(mesa.Agent):
         self.nombre = unique_id
         self.color = "blue"
         self.moverStatus = None
+        self.seleccion = ""
+
+    def moveAbajo(self):
+        x,y = self.pos
+        if self.model.grid.is_cell_empty((x, y - 1)):
+            self.newPos = (x , y - 1)
+            self.model.grid.move_agent(self,self.newPos)
+            self.velocidadAgente = {
+                "x": str(self.newPos[0] - x),
+                "y": str(self.newPos[1] - y)
+            }
+        else:
+            self.stop()
+
+
+    def moveDerecha(self):
+        x,y = self.pos
+        if self.model.grid.is_cell_empty((x + 1, y)):
+            self.newPos = (x + 1 , y)
+            self.model.grid.move_agent(self,self.newPos)
+            self.velocidadAgente = {
+                "x": str(self.newPos[0] - x),
+                "y": str(self.newPos[1] - y)
+            }
+        else:
+            self.stop()
+
+    def moveIzquierda(self):
+        x,y = self.pos
+        if self.model.grid.is_cell_empty((x - 1, y)):
+            self.newPos = (x - 1 , y)
+            self.model.grid.move_agent(self,self.newPos)
+            self.velocidadAgente = {
+                "x": str(self.newPos[0] - x),
+                "y": str(self.newPos[1] - y)
+            }
+        else:
+            self.stop()
+            
+    def seleccionaDireccion(self):
+         #Carril abajo derecha
+        #random2 = random.randint(25,30)#Carril Arriba derecha
+
+        #Cuadrícula izquierda
+
+        if (self.pos[1] == 41 and self.pos[0] > 19):
+            self.seleccion = "izquierda"
+            self.moveIzquierda()
+
+        elif (self.pos[0] == 5 and self.pos[1] == 41):
+            self.seleccion = "abajo"
+            self.moveAbajo()
+        elif(self.pos[0] == 5 and self.pos[1] == 5):
+            self.seleccion = "derecha"
+            self.moveDerecha()
+        elif(self.pos[0] == 21 and self.pos[1] == 5):
+            self.seleccion = "arriba"
+            self.verificaSemaforo()
+        #Movimiento General
+
+        elif self.seleccion == "derecha":
+            self.moveDerecha()
+
+        elif self.seleccion == "izquierda":
+            self.moveIzquierda()
+
+        elif self.seleccion == "arriba":
+            self.verificaSemaforo()
+
+        elif self.seleccion == "abajo":
+            self.moveAbajo()
+
+        #Tercera Intersección CarAgent1
+        else:
+            self.verificaSemaforo()
+            
 
     def verificaSemaforo(self):
         celdasAlrededor = self.model.grid.get_neighbors(self.pos, moore = True, include_center = False, radius = 2)
         for i in celdasAlrededor:
-            if (isinstance(i, SemaforoAgent3)):
+            if (isinstance(i, SemaforoAgent3) or isinstance(i,SemaforoAgent2)):
                 if(i.color == "red" or i.color == "yellow"):
                     self.moverStatus = False
                     break
@@ -377,7 +453,7 @@ class CarAgent3(mesa.Agent):
         else:
             self.stop()
     def step(self):
-        self.verificaSemaforo()
+        self.seleccionaDireccion()
 
 #Se dirige abajo carril derecho
 class CarAgent4(mesa.Agent):
@@ -387,7 +463,88 @@ class CarAgent4(mesa.Agent):
         self.nombre = unique_id
         self.color = "black"
         self.moverStatus = None
+        self.seleccion = ""
+    def moveArriba(self):
+        x,y = self.pos
+        if self.model.grid.is_cell_empty((x, y + 1)):
+            self.newPos = (x , y + 1)
+            self.model.grid.move_agent(self,self.newPos)
+            self.velocidadAgente = {
+                "x": str(self.newPos[0] - x),
+                "y": str(self.newPos[1] - y)
+            }
+        else:
+            self.stop()
 
+
+    def moveDerecha(self):
+        x,y = self.pos
+        if self.model.grid.is_cell_empty((x + 1, y)):
+            self.newPos = (x + 1 , y)
+            self.model.grid.move_agent(self,self.newPos)
+            self.velocidadAgente = {
+                "x": str(self.newPos[0] - x),
+                "y": str(self.newPos[1] - y)
+            }
+        else:
+            self.stop()
+
+    def moveIzquierda(self):
+        x,y = self.pos
+        if self.model.grid.is_cell_empty((x - 1, y)):
+            self.newPos = (x - 1 , y)
+            self.model.grid.move_agent(self,self.newPos)
+            self.velocidadAgente = {
+                "x": str(self.newPos[0] - x),
+                "y": str(self.newPos[1] - y)
+            }
+        else:
+            self.stop()
+            
+    def seleccionaDireccion(self):
+         #Carril abajo derecha
+        #random2 = random.randint(25,30)#Carril Arriba derecha
+
+        #Cuadrícula izquierda
+
+        if (self.pos[1] == 7 and self.pos[0] <= 29):
+            self.seleccion = "derecha"
+            self.moveDerecha()
+        elif (self.pos[0] == 41 and self.pos[1] == 7):
+            self.seleccion = "arriba"
+            self.moveArriba()
+
+        elif(self.pos[0] == 41 and self.pos[1] == 41):
+            self.seleccion = "izquierda"
+            self.moveIzquierda()
+        elif(self.pos[0] <= 29 and self.pos[1] == 41):
+            self.seleccion = "abajo"
+            self.verificaSemaforo()
+           # self.seleccion = "abajo"
+           # self.moveAbajo()
+        #elif(self.pos[0] == 5 and self.pos[1] == 5):
+         #   self.seleccion = "derecha"
+         #   self.moveDerecha()
+      #  elif(self.pos[0] == 21 and self.pos[1] == 5):
+         #   self.seleccion = "arriba"
+        #    self.verificaSemaforo()
+        #Movimiento General
+
+        elif self.seleccion == "derecha":
+            self.moveDerecha()
+
+        elif self.seleccion == "izquierda":
+            self.moveIzquierda()
+
+        elif self.seleccion == "arriba":
+            self.moveArriba()
+
+        elif self.seleccion == "abajo":
+            self.verificaSemaforo()
+
+        #Tercera Intersección CarAgent1
+        else:
+            self.verificaSemaforo()
     def verificaSemaforo(self):
         celdasAlrededor = self.model.grid.get_neighbors(self.pos, moore = True, include_center = False, radius = 2)
         for i in celdasAlrededor:
@@ -430,7 +587,7 @@ class CarAgent4(mesa.Agent):
         else:
             self.stop()
     def step(self):
-        self.verificaSemaforo()
+        self.seleccionaDireccion()
 
 class SemaforoAgent1(mesa.Agent):
     def __init__(self, unique_id, model):
