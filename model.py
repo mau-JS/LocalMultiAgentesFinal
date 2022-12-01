@@ -20,7 +20,7 @@ def compute_gini(model):
     return suma
 
 #Cambiar esta linea
-for i in range (20):
+for i in range (10):
     #CarAgentType1
     eleccion = random.choice(choices)
 
