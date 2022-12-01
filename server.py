@@ -16,7 +16,7 @@ def agent_portrayal(agent):
 #print(results_df.keys())
 
 grid = mesa.visualization.CanvasGrid(agent_portrayal, 50, 50, 500, 500)
-chart = mesa.visualization.ChartModule([{"Label": "Cantidades totales de frenado como suma de todos los coches.",
+chart = mesa.visualization.ChartModule([{"Label": "Tiempo total de coches en alto total",
                       "Color": "Black"}],
                     data_collector_name='datacollector')
 

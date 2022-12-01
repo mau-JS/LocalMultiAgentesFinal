@@ -17,7 +17,7 @@ class CarAgent1(mesa.Agent):
         self.moverStatus = None
         self.seleccion = ""
         self.conteo = 0
-
+        self.stopsSemaforo = None
     def moveAbajo(self):
         x,y = self.pos
         if self.model.grid.is_cell_empty((x, y - 1)):
@@ -133,9 +133,11 @@ class CarAgent1(mesa.Agent):
         for i in celdasAlrededor:
             if (isinstance(i, SemaforoAgent1) or isinstance(i,SemaforoAgent3)):
                 if(i.color == "red" or i.color == "yellow"):
+                    self.stopsSemaforo = True
                     self.moverStatus = False
                     break
                 elif(i.color == "green"):
+                    self.stopsSemaforo = False
                     self.moverStatus = True
                     break
             else: 
@@ -172,6 +174,9 @@ class CarAgent1(mesa.Agent):
 
     def step(self):
         self.seleccionaDireccion()
+        if(self.stopsSemaforo == True):
+            self.conteo += 1
+        self.stopsSemaforo = None
         #for i in self.celdasAlrededor:
         #    print(str(self.unique_id) +" "+ str(self.celdasAlrededor))
         #self.move()
@@ -186,7 +191,7 @@ class CarAgent2(mesa.Agent):
         self.moverStatus = None
         self.seleccion = ""
         self.conteo = 0
-
+        self.stopsSemaforo = None
     def moveAbajo(self):
         x,y = self.pos
         if self.model.grid.is_cell_empty((x, y - 1)):
@@ -283,9 +288,11 @@ class CarAgent2(mesa.Agent):
         for i in celdasAlrededor:
             if (isinstance(i, SemaforoAgent2) or isinstance(i,SemaforoAgent4)):
                 if(i.color == "red" or i.color == "yellow"):
+                    self.stopsSemaforo = True
                     self.moverStatus = False
                     break
                 elif(i.color == "green"):
+                    self.stopsSemaforo = False
                     self.moverStatus = True
                     break
             else: 
@@ -325,6 +332,8 @@ class CarAgent2(mesa.Agent):
 
     def step(self):
         self.seleccionaDireccion()
+        if self.stopsSemaforo == True:
+            self.conteo += 1
 
 
 #Coche se dirige arriba

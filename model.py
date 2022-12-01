@@ -10,14 +10,14 @@ posicionAgent = []
 posicionStep = []
 choices = (CarAgent1,CarAgent2,CarAgent3,CarAgent4)
 selecciones = []
-suma = 0
 
 def compute_gini(model):
-    global suma
+    acumulado = 0
     for i in model.schedule.agents:
-        if (isinstance(i,CarAgent1) or isinstance(i,CarAgent2) or isinstance(i,CarAgent3) or isinstance(i,CarAgent4)):
-            suma += i.conteo
-    return suma
+        if (isinstance(i,CarAgent1) or isinstance(i,CarAgent2)):
+            acumulado += i.conteo
+    return acumulado
+
 
 #Cambiar esta linea
 for i in range (10):
@@ -115,9 +115,7 @@ class CarModel(mesa.Model):
 
 
 
-        self.datacollector = mesa.DataCollector(
-            model_reporters={"Gini": compute_gini}
-        )
+
 
         s1 = SemaforoAgent1("S" + str(1),self)
         self.schedule.add(s1)
@@ -155,11 +153,14 @@ class CarModel(mesa.Model):
         y1 = 10
         self.grid.place_agent(s6,(x1,y1))
 
+        self.datacollector = mesa.DataCollector(
+            model_reporters={"Tiempo total de coches en alto total": compute_gini}
+        )
+
     def step(self):
         posicionStep = []
         self.datacollector.collect(self)
         self.schedule.step()
-
         for i in self.schedule.agents:
             if(isinstance(i,CarAgent1) or isinstance(i,CarAgent2) or isinstance(i,CarAgent3) or isinstance(i,CarAgent4)):
                 posicionStep.append(i.velocidadAgente)
