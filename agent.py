@@ -56,7 +56,7 @@ class CarAgent1(mesa.Agent):
             self.stop()
 #Seleccion2 izquierda
     def seleccionaDireccion(self):
-        random1 = random.randint(20,22) #Carril abajo derecha
+        random1 = random.choice([20,21]) #Carril abajo derecha
         #random2 = random.randint(25,30)#Carril Arriba derecha
 
         #Cuadrícula izquierda
@@ -130,7 +130,7 @@ class CarAgent1(mesa.Agent):
     def verificaSemaforo(self):
         celdasAlrededor = self.model.grid.get_neighbors(self.pos, moore = True, include_center = False, radius = 2)
         for i in celdasAlrededor:
-            if (isinstance(i, SemaforoAgent1)):
+            if (isinstance(i, SemaforoAgent1) or isinstance(i,SemaforoAgent3)):
                 if(i.color == "red" or i.color == "yellow"):
                     self.moverStatus = False
                     break
@@ -223,7 +223,7 @@ class CarAgent2(mesa.Agent):
             self.stop()
 
     def seleccionaDireccion(self):
-        random1 = random.randint(27,29) #Carril abajo derecha
+        random1 = random.randint(28,29) #Carril abajo derecha
         #random2 = random.randint(25,30)#Carril Arriba derecha
 
         #Cuadrícula abajo derecha
@@ -279,7 +279,7 @@ class CarAgent2(mesa.Agent):
     def verificaSemaforo(self):
         celdasAlrededor = self.model.grid.get_neighbors(self.pos, moore = True, include_center = False, radius = 2)
         for i in celdasAlrededor:
-            if (isinstance(i, SemaforoAgent2)):
+            if (isinstance(i, SemaforoAgent2) or isinstance(i,SemaforoAgent4)):
                 if(i.color == "red" or i.color == "yellow"):
                     self.moverStatus = False
                     break

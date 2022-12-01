@@ -136,6 +136,18 @@ class CarModel(mesa.Model):
         y1 = 30
         self.grid.place_agent(s4,(x1,y1))
 
+        s5 = SemaforoAgent3("S_5" + str(3),self)
+        self.schedule.add(s5)
+        x1 = 22
+        y1 = 39
+        self.grid.place_agent(s5,(x1,y1))
+
+        s6 = SemaforoAgent4("S_6" + str(4),self)
+        self.schedule.add(s6)
+        x1 = 27
+        y1 = 10
+        self.grid.place_agent(s6,(x1,y1))
+
     def step(self):
         posicionStep = []
         self.datacollector.collect(self)
